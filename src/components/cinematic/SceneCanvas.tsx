@@ -149,7 +149,7 @@ function ParticleField({ count = 80, progress, mode }: {
       <bufferGeometry>
         <bufferAttribute attach="attributes-position" args={[positions, 3]} />
       </bufferGeometry>
-      <pointsMaterial size={0.016} color={MODES.intro.particleColor} transparent opacity={0.45} sizeAttenuation depthWrite={false} />
+      <pointsMaterial size={0.014} color={MODES.intro.particleColor} transparent opacity={0.32} sizeAttenuation depthWrite={false} />
     </points>
   );
 }
@@ -169,9 +169,9 @@ function Core({ progress, mode }: { progress: number; mode: SceneMode }) {
       <Float speed={0.7} rotationIntensity={0.15} floatIntensity={0.35}>
         <GlassOrb progress={progress} mode={mode} />
       </Float>
-      <ElegantRing radius={2.0}  tilt={[0, 0, 0]}                           speed={0.10}  mode={mode} opacity={0.35} />
-      <ElegantRing radius={2.55} tilt={[Math.PI / 2.2, 0, 0]}               speed={-0.07} mode={mode} opacity={0.20} />
-      <ElegantRing radius={3.1}  tilt={[Math.PI / 4, Math.PI / 3.5, 0]}     speed={0.05}  mode={mode} opacity={0.12} />
+      <ElegantRing radius={2.0}  tilt={[0, 0, 0]}                           speed={0.08}  mode={mode} opacity={0.24} />
+      <ElegantRing radius={2.55} tilt={[Math.PI / 2.2, 0, 0]}               speed={-0.055} mode={mode} opacity={0.15} />
+      <ElegantRing radius={3.1}  tilt={[Math.PI / 4, Math.PI / 3.5, 0]}     speed={0.04}  mode={mode} opacity={0.09} />
     </group>
   );
 }
@@ -209,7 +209,7 @@ export function SceneCanvas({ progress, mode }: Props) {
         <pointLight position={[0, 0, 3]} intensity={0.6} color="#7fb0ff" />
 
         {/* Very faint star field — background depth only */}
-        <Stars radius={80} depth={60} count={600} factor={1.8} fade speed={0.2} />
+        <Stars radius={80} depth={60} count={420} factor={1.45} fade speed={0.12} />
         <ParticleField progress={progress} mode={mode} />
 
         <Core progress={progress} mode={mode} />
@@ -218,8 +218,8 @@ export function SceneCanvas({ progress, mode }: Props) {
         <Environment preset="studio" />
 
         <EffectComposer>
-          <Bloom intensity={0.8} luminanceThreshold={0.4} luminanceSmoothing={0.92} mipmapBlur />
-          <Vignette eskil={false} offset={0.25} darkness={0.9} />
+          <Bloom intensity={0.45} luminanceThreshold={0.48} luminanceSmoothing={0.92} mipmapBlur />
+          <Vignette eskil={false} offset={0.32} darkness={0.74} />
         </EffectComposer>
       </Suspense>
     </Canvas>
