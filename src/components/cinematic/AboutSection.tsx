@@ -267,7 +267,7 @@ export function AboutSection() {
             >
               {/* Card */}
               <div
-                className="relative rounded-2xl overflow-hidden border border-white/10"
+              className="relative rounded-xl overflow-hidden border border-white/10"
                 style={{
                   background: "linear-gradient(135deg, oklch(0.12 0.018 250) 0%, oklch(0.09 0.012 250) 100%)",
                   boxShadow: "0 40px 80px oklch(0 0 0 / 0.4), inset 0 1px 0 oklch(1 0 0 / 0.08)",
@@ -367,7 +367,7 @@ export function AboutSection() {
               {/* Floating glow behind card */}
               <div
                 aria-hidden
-                className="absolute -inset-4 -z-10 rounded-3xl opacity-30 pointer-events-none"
+                className="absolute -inset-4 -z-10 rounded-2xl opacity-22 pointer-events-none"
                 style={{
                   background: "radial-gradient(ellipse at center, oklch(0.72 0.13 240 / 0.3), transparent 70%)",
                   filter: "blur(24px)",
@@ -381,7 +381,7 @@ export function AboutSection() {
       {/* ── Part 2: Timeline (Cinematic 3D) ── */}
       <div
         ref={timelineRef}
-        className="relative px-6 md:px-16 lg:px-24 py-32"
+        className="section-shell relative"
       >
         {/* Local 3D Canvas Background */}
         <div className="absolute inset-0 z-0 pointer-events-none opacity-60">
@@ -411,7 +411,7 @@ export function AboutSection() {
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
+            transition={{ duration: 0.9, ease: [0.7, 0, 0.2, 1] }}
             className="chapter-num mb-20"
           >
             The story so far
