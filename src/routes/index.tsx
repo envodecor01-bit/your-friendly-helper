@@ -417,7 +417,7 @@ function ServicesScene() {
 
 function StackScene() {
   return (
-    <section id="stack" className="relative pb-16">
+    <section id="stack" className="relative pb-16 overflow-hidden">
       {/* We remove the text header here because StackEcosystem includes its own title overlay for better immersion */}
       <StackEcosystem />
     </section>
@@ -437,7 +437,7 @@ function ContactScene() {
   return (
     <section
       id="contact"
-      className="relative min-h-screen flex items-center px-6 md:px-16 lg:px-24 py-32 overflow-hidden"
+      className="section-shell relative min-h-[100svh] flex items-center overflow-hidden"
     >
       {/* Bloom */}
       <div
@@ -463,7 +463,7 @@ function ContactScene() {
           <SplitReveal
             as="h2"
             by="word"
-            className="font-display font-extralight tracking-[-0.04em] text-[clamp(2.5rem,9vw,9rem)] leading-[0.92]"
+            className="font-display font-extralight tracking-normal text-[clamp(2.5rem,9vw,9rem)] leading-[0.92]"
           >
             Let's build something powerful.
           </SplitReveal>
