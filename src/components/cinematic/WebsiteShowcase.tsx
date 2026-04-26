@@ -5,6 +5,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { Magnetic } from "./Magnetic";
+import { getLenis } from "@/lib/scrollTo";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
@@ -88,7 +89,12 @@ export function WebsiteShowcase({ projects }: WebsiteShowcaseProps) {
     const targetProgress = (index + 0.5) / projects.length;
     const targetScroll = start + (targetProgress * scrollDistance);
     
-    window.scrollTo({ top: targetScroll, behavior: "smooth" });
+    const lenis = getLenis();
+    if (lenis) {
+      lenis.scrollTo(targetScroll, { duration: 1.1 });
+    } else {
+      window.scrollTo({ top: targetScroll, behavior: "smooth" });
+    }
   };
 
   return (
