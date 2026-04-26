@@ -151,7 +151,7 @@ export function WebsiteShowcase({ projects }: WebsiteShowcaseProps) {
                       <div className="flex items-center justify-between gap-4 mb-1.5">
                         <h3
                           className={`font-display text-lg md:text-xl font-light transition-colors duration-400 ${
-                            isActive ? "text-foreground drop-shadow-[0_0_10px_rgba(255,255,255,0.3)]" : "text-muted-foreground"
+                            isActive ? "text-foreground drop-shadow-[0_0_10px_oklch(1_0_0/0.22)]" : "text-muted-foreground"
                           }`}
                           style={{ fontFamily: "var(--font-display)" }}
                         >
@@ -226,9 +226,9 @@ export function WebsiteShowcase({ projects }: WebsiteShowcaseProps) {
                   {/* Browser chrome */}
                   <div className="flex items-center gap-2 px-4 py-3 bg-secondary/70 border-b border-white/5 relative z-20">
                     <div className="flex gap-1.5">
-                      <div className="w-2.5 h-2.5 rounded-full bg-[#ff5f57]" />
-                      <div className="w-2.5 h-2.5 rounded-full bg-[#febc2e]" />
-                      <div className="w-2.5 h-2.5 rounded-full bg-[#28c840]" />
+                      <div className="w-2.5 h-2.5 rounded-full bg-primary/70" />
+                      <div className="w-2.5 h-2.5 rounded-full bg-muted-foreground/35" />
+                      <div className="w-2.5 h-2.5 rounded-full bg-foreground/35" />
                     </div>
                     <div className="flex-1 mx-4">
                       <div className="flex items-center gap-2 px-3 py-1.5 rounded-md bg-white/5 border border-white/5 shadow-inner">
