@@ -141,15 +141,34 @@
     text-rendering: optimizeLegibility;
   }
 
-  body { overflow-x: hidden; }
+  html {
+    scroll-behavior: auto;
+  }
+
+  body {
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
 
   /* Sections sit on top of the fixed 3D canvas.
      Frosted-dark panels keep text perfectly legible
      while the 3D scene breathes through the hero. */
   section {
-    background: oklch(0.04 0.005 250 / 0.92);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    position: relative;
+    background: var(--gradient-section);
+    backdrop-filter: blur(7px);
+    -webkit-backdrop-filter: blur(7px);
+  }
+
+  section:not(#intro)::before {
+    content: "";
+    position: absolute;
+    inset: -1px 0 auto;
+    height: clamp(5rem, 10vw, 9rem);
+    pointer-events: none;
+    background: linear-gradient(to bottom, oklch(0.04 0.005 250 / 0), oklch(0.04 0.005 250 / 0.62), oklch(0.04 0.005 250 / 0));
+    transform: translateY(-50%);
+    z-index: 0;
   }
 
   /* Hero is fully transparent — 3D scene IS the background */
@@ -168,6 +187,11 @@
   ::-webkit-scrollbar-track { background: transparent; }
   ::-webkit-scrollbar-thumb { background: oklch(1 0 0 / 0.08); border-radius: 3px; }
   ::-webkit-scrollbar-thumb:hover { background: oklch(1 0 0 / 0.15); }
+
+  button,
+  a {
+    -webkit-tap-highlight-color: transparent;
+  }
 }
 
 @layer utilities {
