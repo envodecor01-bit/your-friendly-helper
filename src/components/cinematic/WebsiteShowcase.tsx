@@ -35,10 +35,10 @@ export function WebsiteShowcase({ projects }: WebsiteShowcaseProps) {
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
-  const rotateX = useSpring(useTransform(mouseY, [-0.5, 0.5], [4, -4]), { damping: 30, stiffness: 200 });
-  const rotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-4, 4]), { damping: 30, stiffness: 200 });
-  const parallaxX = useSpring(useTransform(mouseX, [-0.5, 0.5], [-10, 10]), { damping: 30, stiffness: 200 });
-  const parallaxY = useSpring(useTransform(mouseY, [-0.5, 0.5], [-10, 10]), { damping: 30, stiffness: 200 });
+  const rotateX = useSpring(useTransform(mouseY, [-0.5, 0.5], [2.5, -2.5]), { damping: 34, stiffness: 180 });
+  const rotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-2.5, 2.5]), { damping: 34, stiffness: 180 });
+  const parallaxX = useSpring(useTransform(mouseX, [-0.5, 0.5], [-6, 6]), { damping: 34, stiffness: 180 });
+  const parallaxY = useSpring(useTransform(mouseY, [-0.5, 0.5], [-6, 6]), { damping: 34, stiffness: 180 });
 
   function handleMouseMove(e: React.MouseEvent<HTMLDivElement>) {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -61,7 +61,7 @@ export function WebsiteShowcase({ projects }: WebsiteShowcaseProps) {
       trigger: containerRef.current,
       start: "top top",
       end: "bottom bottom",
-      scrub: 1,
+      scrub: 1.35,
       onUpdate: (self) => {
         // Map progress to active index safely
         const progress = self.progress;
@@ -92,8 +92,8 @@ export function WebsiteShowcase({ projects }: WebsiteShowcaseProps) {
   };
 
   return (
-    <section ref={containerRef} className="relative w-full" style={{ height: `${projects.length * 100}vh` }}>
-      <div className="sticky top-0 w-full h-screen overflow-hidden flex items-center justify-center bg-background px-6 md:px-16 lg:px-24">
+    <section ref={containerRef} className="relative w-full overflow-hidden" style={{ height: `${projects.length * 100}vh` }}>
+      <div className="sticky top-0 w-full h-screen overflow-hidden flex items-center justify-center px-[var(--section-px)]">
         <div className="w-full max-w-6xl mx-auto flex flex-col justify-center h-full pt-20 pb-10">
           
           <motion.div
@@ -108,7 +108,7 @@ export function WebsiteShowcase({ projects }: WebsiteShowcaseProps) {
           <SplitReveal
             as="h2"
             by="word"
-            className="font-display font-light tracking-[-0.03em] text-[clamp(2rem,5vw,4.5rem)] leading-[1.05] mb-12 max-w-3xl"
+            className="font-display font-light tracking-normal text-[clamp(2rem,5vw,4.5rem)] leading-[1.05] mb-12 max-w-3xl"
           >
             Websites built to convert.
           </SplitReveal>
