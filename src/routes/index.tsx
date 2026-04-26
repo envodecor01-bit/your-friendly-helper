@@ -485,49 +485,38 @@ function ContactScene() {
             transition={{ delay: 0.7, duration: 0.8 }}
             className="mt-14 flex flex-col sm:flex-row items-center justify-center gap-4"
           >
-            <Magnetic strength={0.6}>
+            <Magnetic strength={0.24}>
               <a
                 href="mailto:hello@aryangarg.dev"
-                className="group relative inline-flex items-center gap-3 px-8 py-4 rounded-full bg-primary/90 text-primary-foreground font-medium text-sm tracking-wide overflow-hidden transition-all duration-500 hover:scale-105 border border-primary/50"
+                className="premium-button group bg-primary/90 text-primary-foreground border-primary/50 font-medium text-sm"
                 data-cursor="email"
               >
-                <motion.div
-                  className="absolute inset-0"
-                  animate={{ opacity: [0.6, 1, 0.6] }}
-                  transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
-                  style={{ boxShadow: "0 0 60px oklch(0.72 0.13 240 / 0.8) inset" }}
-                />
-                <span
-                  aria-hidden
-                  className="absolute inset-0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"
-                  style={{ background: "linear-gradient(90deg,transparent,oklch(1 1 1/0.2),transparent)" }}
-                />
                 <span className="relative font-mono text-xs uppercase tracking-widest z-10" style={{ fontFamily: "var(--font-mono)" }}>Let's build</span>
                 <span className="relative z-10 transition-transform duration-300 group-hover:translate-x-1">→</span>
               </a>
             </Magnetic>
 
-            <Magnetic strength={0.3}>
+            <Magnetic strength={0.18}>
               <button
                 onClick={handleCopy}
-                className="text-xs font-mono uppercase tracking-[0.2em] text-muted-foreground hover:text-foreground transition-all duration-300 px-6 py-4 border border-white/10 rounded-full hover:border-white/20 hover:bg-white/5"
+                className="premium-button text-xs font-mono uppercase tracking-[0.2em] text-muted-foreground hover:text-foreground"
                 data-cursor="hover"
                 style={{ fontFamily: "var(--font-mono)" }}
               >
-                {copied ? "✓ Copied!" : "Copy email"}
+                <span>{copied ? "✓ Copied" : "Copy email"}</span>
               </button>
             </Magnetic>
 
-            <Magnetic strength={0.3}>
+            <Magnetic strength={0.18}>
               <a
                 href="https://cal.com"
                 target="_blank"
                 rel="noreferrer"
-                className="text-sm font-mono uppercase tracking-[0.2em] text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"
+                className="premium-button text-xs font-mono uppercase tracking-[0.2em] text-muted-foreground hover:text-foreground"
                 data-cursor="book"
                 style={{ fontFamily: "var(--font-mono)" }}
               >
-                Book a call ↗
+                <span>Book a call ↗</span>
               </a>
             </Magnetic>
           </motion.div>
