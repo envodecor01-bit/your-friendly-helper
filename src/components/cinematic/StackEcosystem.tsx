@@ -39,9 +39,9 @@ export function StackEcosystem() {
 
   // Pre-calculate positions for stability
   const clusterPositions = useMemo(() => {
-    return TOOLS.map(() => ({
-      x: (Math.random() - 0.5) * (typeof window !== 'undefined' ? window.innerWidth * 0.6 : 800) + (Math.random() > 0.5 ? 100 : -100),
-      y: (Math.random() - 0.5) * (typeof window !== 'undefined' ? window.innerHeight * 0.6 : 500) + (Math.random() > 0.5 ? 100 : -100),
+    return TOOLS.map((_, i) => ({
+      x: Math.cos(i * 2.399963) * (typeof window !== 'undefined' ? window.innerWidth * 0.28 : 360),
+      y: Math.sin(i * 1.713879) * (typeof window !== 'undefined' ? window.innerHeight * 0.24 : 220),
     }));
   }, []);
 
@@ -87,15 +87,15 @@ export function StackEcosystem() {
     TOOLS.forEach((tool, i) => {
       tl.fromTo(`.tool-item-${i}`,
         { opacity: 0, scale: 2, x: 0, y: 0, rotationX: 45, filter: "blur(20px)" },
-        { opacity: 1, scale: 1.5, rotationX: 0, filter: "blur(0px)", duration: 1, ease: "back.out(1.2)" }
+        { opacity: 1, scale: 1.35, rotationX: 0, filter: "blur(0px)", duration: 1, ease: "power3.out" }
       );
       tl.to(`.tool-item-${i} .sweep-glow`, { left: "150%", duration: 0.8, ease: "power1.inOut" }, "<0.2");
       tl.to(`.tool-item-${i}`, {
         x: clusterPositions[i].x,
         y: clusterPositions[i].y,
-        scale: 0.7,
-        opacity: 0.4,
-        filter: "blur(2px)",
+        scale: 0.76,
+        opacity: 0.48,
+        filter: "blur(1px)",
         duration: 1.2,
         ease: "power3.inOut"
       }, "+=0.3");
@@ -153,9 +153,9 @@ export function StackEcosystem() {
     
     // Deepen background pulse
     tl.to(".ecosystem-bg-pulse", {
-      scale: 1.5,
+      scale: 1.36,
       opacity: 0.4,
-      background: "radial-gradient(circle, rgba(112, 20, 245, 0.15) 0%, transparent 60%)",
+      background: "radial-gradient(circle, oklch(0.70 0.14 245 / 0.12) 0%, transparent 62%)",
       duration: 2
     }, "transform-system");
 
