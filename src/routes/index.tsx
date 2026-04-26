@@ -326,19 +326,19 @@ function IntroScene() {
 
 function ThesisScene() {
   return (
-    <section id="ai" className="relative px-6 md:px-16 lg:px-24 py-32 min-h-[80vh] flex items-center">
+    <section id="ai" className="section-shell relative min-h-[82vh] flex items-center overflow-hidden">
       <div className="relative z-10 max-w-6xl mx-auto w-full">
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.9, ease: [0.7, 0, 0.2, 1] }}
           className="chapter-num mb-10"
         >
           <span className="text-primary mr-3">02</span> The Thesis
         </motion.div>
 
-        <TextScrub className="font-display font-light tracking-[-0.03em] text-[clamp(2rem,5.5vw,5.5rem)] leading-[1.08] max-w-5xl">
+        <TextScrub className="font-display font-light tracking-normal text-[clamp(2rem,5.5vw,5.5rem)] leading-[1.08] max-w-5xl">
           I build AI systems that automate businesses. Not chatbots. Not demos. Production systems wired into your stack, accountable for real outcomes.
         </TextScrub>
 
