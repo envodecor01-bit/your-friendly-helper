@@ -25,23 +25,23 @@ function TimelineCore3D() {
       <Float speed={2} rotationIntensity={0.5} floatIntensity={0.5}>
         <mesh>
           <icosahedronGeometry args={[4, 1]} />
-          <meshBasicMaterial color="#7fb0ff" wireframe transparent opacity={0.03} />
+          <meshBasicMaterial color="#7fb0ff" wireframe transparent opacity={0.02} />
         </mesh>
         <mesh scale={0.8}>
           <icosahedronGeometry args={[2.5, 3]} />
           <MeshTransmissionMaterial 
             samples={2}
             thickness={1}
-            chromaticAberration={0.1}
+            chromaticAberration={0.04}
             ior={1.2}
             color="#7fb0ff"
             attenuationColor="#0a1f4a"
             attenuationDistance={3}
             transparent
-            opacity={0.6}
+            opacity={0.42}
           />
         </mesh>
-        <pointLight color="#7fb0ff" intensity={2} distance={8} />
+        <pointLight color="#7fb0ff" intensity={1.15} distance={8} />
       </Float>
     </group>
   );
