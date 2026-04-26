@@ -39,12 +39,12 @@ export function ServiceHover({ services }: ServiceHoverProps) {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.85 }}
-            transition={{ duration: 0.25, ease: [0.7, 0, 0.2, 1] }}
-            className="absolute z-20 pointer-events-none hidden lg:flex flex-col gap-3 p-5 rounded-2xl border border-white/10 bg-card/80 backdrop-blur-xl w-56"
+            transition={{ duration: 0.35, ease: [0.7, 0, 0.2, 1] }}
+            className="absolute z-20 pointer-events-none hidden lg:flex flex-col gap-3 p-5 rounded-xl border border-white/10 bg-card/80 backdrop-blur-xl w-56"
             style={{
               left: cursorPos.x + 28,
               top: cursorPos.y - 80,
-              boxShadow: "0 20px 60px oklch(0 0 0 / 0.4)",
+              boxShadow: "var(--shadow-elevated)",
             }}
           >
             <span className="text-3xl">{services[active].icon}</span>
@@ -67,15 +67,15 @@ export function ServiceHover({ services }: ServiceHoverProps) {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.7, delay: i * 0.08, ease: [0.7, 0, 0.2, 1] }}
+          transition={{ duration: 0.85, delay: i * 0.06, ease: [0.7, 0, 0.2, 1] }}
           onMouseEnter={() => setActive(i)}
           onMouseLeave={() => setActive(null)}
           animate={{
             opacity: active === null || active === i ? 1 : 0.4,
-            scale: active === i ? 1.02 : 1,
-            filter: active !== null && active !== i ? "blur(2px)" : "blur(0px)",
+            scale: active === i ? 1.008 : 1,
+            filter: active !== null && active !== i ? "blur(1px)" : "blur(0px)",
           }}
-          className="group relative flex items-center gap-6 md:gap-10 border-b border-white/8 py-10 md:py-12 cursor-pointer transition-all duration-500 ease-[cubic-bezier(0.7,0,0.2,1)]"
+          className="group relative flex items-center gap-6 md:gap-10 border-b border-white/8 py-10 md:py-12 cursor-pointer transition-all duration-500 ease-[var(--ease-cinematic)]"
         >
           {/* Number */}
           <div
@@ -87,7 +87,7 @@ export function ServiceHover({ services }: ServiceHoverProps) {
 
           {/* Title */}
           <h3
-            className="font-display font-light text-[clamp(1.5rem,4vw,3.5rem)] tracking-tight leading-none flex-1 transition-colors duration-500 group-hover:text-foreground z-10"
+            className="font-display font-light text-[clamp(1.5rem,4vw,3.5rem)] tracking-normal leading-none flex-1 transition-colors duration-500 group-hover:text-foreground z-10"
             style={{ fontFamily: "var(--font-display)" }}
           >
             {service.title}

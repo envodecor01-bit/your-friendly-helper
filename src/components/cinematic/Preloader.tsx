@@ -43,7 +43,7 @@ export function Preloader({ onComplete }: PreloaderProps) {
           initial={{ opacity: 1 }}
           exit={{ opacity: 0, scale: 1.04 }}
           transition={{ duration: 0.9, ease: [0.7, 0, 0.2, 1] }}
-          className="fixed inset-0 z-[200] flex flex-col items-center justify-center bg-[oklch(0.06_0.012_250)]"
+          className="fixed inset-0 z-[200] flex flex-col items-center justify-center bg-background"
         >
           {/* Grid lines */}
           <div
@@ -60,7 +60,7 @@ export function Preloader({ onComplete }: PreloaderProps) {
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
+            transition={{ duration: 0.85, ease: [0.7, 0, 0.2, 1] }}
             className="mb-16 flex items-center gap-3"
           >
             <svg width="28" height="28" viewBox="0 0 28 28" fill="none">

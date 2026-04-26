@@ -35,12 +35,12 @@ const FALLBACK_MODE: ModeSettings = {
 const MODES: Record<SceneMode, ModeSettings> = {
   intro:    { color: "#bcd6ff", emissive: "#0a1f4a", ringColor: "#7fb0ff", particleColor: "#bcd6ff", scale: 1.00 },
   about:    { color: "#a8d8ff", emissive: "#0a1830", ringColor: "#6fa8e8", particleColor: "#c0d8ff", scale: 0.90 },
-  ai:       { color: "#9c88ff", emissive: "#1a0a3a", ringColor: "#b39bff", particleColor: "#c4b5fd", scale: 1.05 },
-  work:     { color: "#ff9c6b", emissive: "#3a1a0a", ringColor: "#ffb088", particleColor: "#ffd0b5", scale: 0.85 },
-  web:      { color: "#6bccff", emissive: "#0a2a3a", ringColor: "#88ddff", particleColor: "#b5eeff", scale: 0.95 },
-  services: { color: "#6bffb0", emissive: "#0a3a1f", ringColor: "#88ffc4", particleColor: "#b5ffd0", scale: 1.10 },
-  stack:    { color: "#ffe06b", emissive: "#3a2a0a", ringColor: "#ffe788", particleColor: "#fff1b5", scale: 0.75 },
-  contact:  { color: "#ff6bb0", emissive: "#3a0a1f", ringColor: "#ff88c4", particleColor: "#ffb5d0", scale: 1.15 },
+  ai:       { color: "#c5bbff", emissive: "#121034", ringColor: "#9c99ff", particleColor: "#d5d1ff", scale: 0.98 },
+  work:     { color: "#cbd8ff", emissive: "#111b32", ringColor: "#8aa8ff", particleColor: "#d7e0ff", scale: 0.86 },
+  web:      { color: "#a8e2ff", emissive: "#0a2534", ringColor: "#88d7ff", particleColor: "#c4edff", scale: 0.92 },
+  services: { color: "#b8f0df", emissive: "#0d2b25", ringColor: "#89e0c4", particleColor: "#d2fff0", scale: 0.96 },
+  stack:    { color: "#d8dcff", emissive: "#12172e", ringColor: "#9daaff", particleColor: "#e1e4ff", scale: 0.78 },
+  contact:  { color: "#ffc8e2", emissive: "#2f1120", ringColor: "#ffa8cf", particleColor: "#ffd7ea", scale: 0.98 },
 };
 
 function getMode(mode: string): ModeSettings {
@@ -78,11 +78,11 @@ function GlassOrb({ progress, mode }: { progress: number; mode: SceneMode }) {
         backside
         samples={8}
         thickness={0.8}
-        chromaticAberration={0.15}
+        chromaticAberration={0.06}
         anisotropy={0.1}
-        distortion={0.2}
-        distortionScale={0.2}
-        temporalDistortion={0.08}
+        distortion={0.12}
+        distortionScale={0.12}
+        temporalDistortion={0.035}
         ior={1.5}
         roughness={0.0}
         color={MODES.intro.color}
@@ -149,7 +149,7 @@ function ParticleField({ count = 80, progress, mode }: {
       <bufferGeometry>
         <bufferAttribute attach="attributes-position" args={[positions, 3]} />
       </bufferGeometry>
-      <pointsMaterial size={0.016} color={MODES.intro.particleColor} transparent opacity={0.45} sizeAttenuation depthWrite={false} />
+      <pointsMaterial size={0.014} color={MODES.intro.particleColor} transparent opacity={0.32} sizeAttenuation depthWrite={false} />
     </points>
   );
 }
@@ -169,9 +169,9 @@ function Core({ progress, mode }: { progress: number; mode: SceneMode }) {
       <Float speed={0.7} rotationIntensity={0.15} floatIntensity={0.35}>
         <GlassOrb progress={progress} mode={mode} />
       </Float>
-      <ElegantRing radius={2.0}  tilt={[0, 0, 0]}                           speed={0.10}  mode={mode} opacity={0.35} />
-      <ElegantRing radius={2.55} tilt={[Math.PI / 2.2, 0, 0]}               speed={-0.07} mode={mode} opacity={0.20} />
-      <ElegantRing radius={3.1}  tilt={[Math.PI / 4, Math.PI / 3.5, 0]}     speed={0.05}  mode={mode} opacity={0.12} />
+      <ElegantRing radius={2.0}  tilt={[0, 0, 0]}                           speed={0.08}  mode={mode} opacity={0.24} />
+      <ElegantRing radius={2.55} tilt={[Math.PI / 2.2, 0, 0]}               speed={-0.055} mode={mode} opacity={0.15} />
+      <ElegantRing radius={3.1}  tilt={[Math.PI / 4, Math.PI / 3.5, 0]}     speed={0.04}  mode={mode} opacity={0.09} />
     </group>
   );
 }
@@ -209,7 +209,7 @@ export function SceneCanvas({ progress, mode }: Props) {
         <pointLight position={[0, 0, 3]} intensity={0.6} color="#7fb0ff" />
 
         {/* Very faint star field — background depth only */}
-        <Stars radius={80} depth={60} count={600} factor={1.8} fade speed={0.2} />
+        <Stars radius={80} depth={60} count={420} factor={1.45} fade speed={0.12} />
         <ParticleField progress={progress} mode={mode} />
 
         <Core progress={progress} mode={mode} />
@@ -218,8 +218,8 @@ export function SceneCanvas({ progress, mode }: Props) {
         <Environment preset="studio" />
 
         <EffectComposer>
-          <Bloom intensity={0.8} luminanceThreshold={0.4} luminanceSmoothing={0.92} mipmapBlur />
-          <Vignette eskil={false} offset={0.25} darkness={0.9} />
+          <Bloom intensity={0.45} luminanceThreshold={0.48} luminanceSmoothing={0.92} mipmapBlur />
+          <Vignette eskil={false} offset={0.32} darkness={0.74} />
         </EffectComposer>
       </Suspense>
     </Canvas>

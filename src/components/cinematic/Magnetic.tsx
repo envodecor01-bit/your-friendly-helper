@@ -14,7 +14,7 @@ interface MagneticProps {
 /** Cursor-following magnetic wrapper. Wrap buttons / links for premium feel. */
 export function Magnetic({
   children,
-  strength = 0.35,
+  strength = 0.22,
   className,
   style,
   as = "div",
@@ -28,6 +28,7 @@ export function Magnetic({
   const sy = useSpring(y, { stiffness: 220, damping: 18, mass: 0.4 });
 
   const handleMove = (e: React.MouseEvent) => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const el = ref.current;
     if (!el) return;
     const r = el.getBoundingClientRect();

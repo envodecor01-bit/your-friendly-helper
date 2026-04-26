@@ -204,7 +204,7 @@ function IntroScene() {
   return (
     <section
       id="intro"
-      className="relative min-h-screen flex flex-col justify-between px-6 md:px-16 lg:px-24 pt-28 pb-16"
+      className="relative min-h-[100svh] flex flex-col justify-between px-[var(--section-px)] pt-28 pb-16"
     >
       {/* Availability badge */}
       <motion.div
@@ -245,7 +245,7 @@ function IntroScene() {
               <motion.h1
                 animate={{ y: [0, -8, 0] }}
                 transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-                className="font-display font-light tracking-[-0.04em] text-[clamp(3.5rem,11vw,11rem)] leading-[0.9] pointer-events-auto"
+                className="font-display font-light tracking-normal text-[clamp(3.5rem,11vw,11rem)] leading-[0.9] pointer-events-auto"
                 style={{ fontFamily: "var(--font-display)" }}
               >
                 Aryan
@@ -284,7 +284,7 @@ function IntroScene() {
           <Magnetic strength={0.4}>
             <button
               onClick={() => scrollToId("about")}
-              className="group flex items-center gap-3 font-mono text-xs uppercase tracking-[0.3em] text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
+              className="premium-button group font-mono text-xs uppercase tracking-[0.24em] text-muted-foreground hover:text-foreground cursor-pointer"
               data-cursor="scroll"
               style={{ fontFamily: "var(--font-mono)" }}
             >
@@ -301,7 +301,7 @@ function IntroScene() {
           <Magnetic strength={0.4}>
             <a
               href="mailto:hello@aryangarg.dev"
-              className="relative hidden md:flex items-center gap-2 px-6 py-3 rounded-full border border-white/15 text-xs font-mono uppercase tracking-[0.2em] text-muted-foreground hover:text-foreground transition-all duration-500 overflow-hidden group"
+              className="premium-button hidden md:flex text-xs font-mono uppercase tracking-[0.2em] text-muted-foreground hover:text-foreground group"
               data-cursor="email"
               style={{ fontFamily: "var(--font-mono)" }}
             >
@@ -326,19 +326,19 @@ function IntroScene() {
 
 function ThesisScene() {
   return (
-    <section id="ai" className="relative px-6 md:px-16 lg:px-24 py-32 min-h-[80vh] flex items-center">
+    <section id="ai" className="section-shell relative min-h-[82vh] flex items-center overflow-hidden">
       <div className="relative z-10 max-w-6xl mx-auto w-full">
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.9, ease: [0.7, 0, 0.2, 1] }}
           className="chapter-num mb-10"
         >
           <span className="text-primary mr-3">02</span> The Thesis
         </motion.div>
 
-        <TextScrub className="font-display font-light tracking-[-0.03em] text-[clamp(2rem,5.5vw,5.5rem)] leading-[1.08] max-w-5xl">
+        <TextScrub className="font-display font-light tracking-normal text-[clamp(2rem,5.5vw,5.5rem)] leading-[1.08] max-w-5xl">
           I build AI systems that automate businesses. Not chatbots. Not demos. Production systems wired into your stack, accountable for real outcomes.
         </TextScrub>
 
@@ -389,13 +389,13 @@ function WorkScene() {
 
 function ServicesScene() {
   return (
-    <section id="services" className="relative px-6 md:px-16 lg:px-24 py-32">
+    <section id="services" className="section-shell relative overflow-hidden">
       <div className="relative z-10 max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.9, ease: [0.7, 0, 0.2, 1] }}
           className="chapter-num mb-6"
         >
           <span className="text-primary mr-3">04</span> Services
@@ -404,7 +404,7 @@ function ServicesScene() {
         <SplitReveal
           as="h2"
           by="word"
-          className="font-display font-light tracking-[-0.03em] text-[clamp(2rem,5vw,4.5rem)] leading-[1] mb-16 max-w-3xl"
+          className="font-display font-light tracking-normal text-[clamp(2rem,5vw,4.5rem)] leading-[1] mb-16 max-w-3xl"
         >
           What I do, end to end.
         </SplitReveal>
@@ -417,7 +417,7 @@ function ServicesScene() {
 
 function StackScene() {
   return (
-    <section id="stack" className="relative pb-16">
+    <section id="stack" className="relative pb-16 overflow-hidden">
       {/* We remove the text header here because StackEcosystem includes its own title overlay for better immersion */}
       <StackEcosystem />
     </section>
@@ -437,7 +437,7 @@ function ContactScene() {
   return (
     <section
       id="contact"
-      className="relative min-h-screen flex items-center px-6 md:px-16 lg:px-24 py-32 overflow-hidden"
+      className="section-shell relative min-h-[100svh] flex items-center overflow-hidden"
     >
       {/* Bloom */}
       <div
@@ -463,7 +463,7 @@ function ContactScene() {
           <SplitReveal
             as="h2"
             by="word"
-            className="font-display font-extralight tracking-[-0.04em] text-[clamp(2.5rem,9vw,9rem)] leading-[0.92]"
+            className="font-display font-extralight tracking-normal text-[clamp(2.5rem,9vw,9rem)] leading-[0.92]"
           >
             Let's build something powerful.
           </SplitReveal>
@@ -485,49 +485,38 @@ function ContactScene() {
             transition={{ delay: 0.7, duration: 0.8 }}
             className="mt-14 flex flex-col sm:flex-row items-center justify-center gap-4"
           >
-            <Magnetic strength={0.6}>
+            <Magnetic strength={0.24}>
               <a
                 href="mailto:hello@aryangarg.dev"
-                className="group relative inline-flex items-center gap-3 px-8 py-4 rounded-full bg-primary/90 text-primary-foreground font-medium text-sm tracking-wide overflow-hidden transition-all duration-500 hover:scale-105 border border-primary/50"
+                className="premium-button group bg-primary/90 text-primary-foreground border-primary/50 font-medium text-sm"
                 data-cursor="email"
               >
-                <motion.div
-                  className="absolute inset-0"
-                  animate={{ opacity: [0.6, 1, 0.6] }}
-                  transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
-                  style={{ boxShadow: "0 0 60px oklch(0.72 0.13 240 / 0.8) inset" }}
-                />
-                <span
-                  aria-hidden
-                  className="absolute inset-0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"
-                  style={{ background: "linear-gradient(90deg,transparent,oklch(1 1 1/0.2),transparent)" }}
-                />
                 <span className="relative font-mono text-xs uppercase tracking-widest z-10" style={{ fontFamily: "var(--font-mono)" }}>Let's build</span>
                 <span className="relative z-10 transition-transform duration-300 group-hover:translate-x-1">→</span>
               </a>
             </Magnetic>
 
-            <Magnetic strength={0.3}>
+            <Magnetic strength={0.18}>
               <button
                 onClick={handleCopy}
-                className="text-xs font-mono uppercase tracking-[0.2em] text-muted-foreground hover:text-foreground transition-all duration-300 px-6 py-4 border border-white/10 rounded-full hover:border-white/20 hover:bg-white/5"
+                className="premium-button text-xs font-mono uppercase tracking-[0.2em] text-muted-foreground hover:text-foreground"
                 data-cursor="hover"
                 style={{ fontFamily: "var(--font-mono)" }}
               >
-                {copied ? "✓ Copied!" : "Copy email"}
+                <span>{copied ? "✓ Copied" : "Copy email"}</span>
               </button>
             </Magnetic>
 
-            <Magnetic strength={0.3}>
+            <Magnetic strength={0.18}>
               <a
                 href="https://cal.com"
                 target="_blank"
                 rel="noreferrer"
-                className="text-sm font-mono uppercase tracking-[0.2em] text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"
+                className="premium-button text-xs font-mono uppercase tracking-[0.2em] text-muted-foreground hover:text-foreground"
                 data-cursor="book"
                 style={{ fontFamily: "var(--font-mono)" }}
               >
-                Book a call ↗
+                <span>Book a call ↗</span>
               </a>
             </Magnetic>
           </motion.div>

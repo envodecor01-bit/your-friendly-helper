@@ -5,6 +5,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { Magnetic } from "./Magnetic";
+import { getLenis } from "@/lib/scrollTo";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
@@ -35,10 +36,10 @@ export function WebsiteShowcase({ projects }: WebsiteShowcaseProps) {
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
-  const rotateX = useSpring(useTransform(mouseY, [-0.5, 0.5], [4, -4]), { damping: 30, stiffness: 200 });
-  const rotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-4, 4]), { damping: 30, stiffness: 200 });
-  const parallaxX = useSpring(useTransform(mouseX, [-0.5, 0.5], [-10, 10]), { damping: 30, stiffness: 200 });
-  const parallaxY = useSpring(useTransform(mouseY, [-0.5, 0.5], [-10, 10]), { damping: 30, stiffness: 200 });
+  const rotateX = useSpring(useTransform(mouseY, [-0.5, 0.5], [2.5, -2.5]), { damping: 34, stiffness: 180 });
+  const rotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-2.5, 2.5]), { damping: 34, stiffness: 180 });
+  const parallaxX = useSpring(useTransform(mouseX, [-0.5, 0.5], [-6, 6]), { damping: 34, stiffness: 180 });
+  const parallaxY = useSpring(useTransform(mouseY, [-0.5, 0.5], [-6, 6]), { damping: 34, stiffness: 180 });
 
   function handleMouseMove(e: React.MouseEvent<HTMLDivElement>) {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -61,7 +62,7 @@ export function WebsiteShowcase({ projects }: WebsiteShowcaseProps) {
       trigger: containerRef.current,
       start: "top top",
       end: "bottom bottom",
-      scrub: 1,
+      scrub: 1.35,
       onUpdate: (self) => {
         // Map progress to active index safely
         const progress = self.progress;
@@ -88,12 +89,17 @@ export function WebsiteShowcase({ projects }: WebsiteShowcaseProps) {
     const targetProgress = (index + 0.5) / projects.length;
     const targetScroll = start + (targetProgress * scrollDistance);
     
-    window.scrollTo({ top: targetScroll, behavior: "smooth" });
+    const lenis = getLenis();
+    if (lenis) {
+      lenis.scrollTo(targetScroll, { duration: 1.1 });
+    } else {
+      window.scrollTo({ top: targetScroll, behavior: "smooth" });
+    }
   };
 
   return (
-    <section ref={containerRef} className="relative w-full" style={{ height: `${projects.length * 100}vh` }}>
-      <div className="sticky top-0 w-full h-screen overflow-hidden flex items-center justify-center bg-background px-6 md:px-16 lg:px-24">
+    <section ref={containerRef} className="relative w-full overflow-hidden" style={{ height: `${projects.length * 100}vh` }}>
+      <div className="sticky top-0 w-full h-screen overflow-hidden flex items-center justify-center px-[var(--section-px)]">
         <div className="w-full max-w-6xl mx-auto flex flex-col justify-center h-full pt-20 pb-10">
           
           <motion.div
@@ -108,7 +114,7 @@ export function WebsiteShowcase({ projects }: WebsiteShowcaseProps) {
           <SplitReveal
             as="h2"
             by="word"
-            className="font-display font-light tracking-[-0.03em] text-[clamp(2rem,5vw,4.5rem)] leading-[1.05] mb-12 max-w-3xl"
+            className="font-display font-light tracking-normal text-[clamp(2rem,5vw,4.5rem)] leading-[1.05] mb-12 max-w-3xl"
           >
             Websites built to convert.
           </SplitReveal>
@@ -123,7 +129,7 @@ export function WebsiteShowcase({ projects }: WebsiteShowcaseProps) {
                   <button
                     key={p.n}
                     onClick={() => scrollToProject(i)}
-                    className={`group relative text-left flex items-start gap-5 py-6 border-b transition-all duration-500 cursor-pointer ${
+                    className={`group relative text-left flex items-start gap-5 py-6 border-b transition-all duration-500 ease-[var(--ease-cinematic)] cursor-pointer ${
                       isActive
                         ? "border-primary/40 opacity-100"
                         : "border-white/8 hover:border-white/16 opacity-40 hover:opacity-70 grayscale-[50%]"
@@ -151,7 +157,7 @@ export function WebsiteShowcase({ projects }: WebsiteShowcaseProps) {
                       <div className="flex items-center justify-between gap-4 mb-1.5">
                         <h3
                           className={`font-display text-lg md:text-xl font-light transition-colors duration-400 ${
-                            isActive ? "text-foreground drop-shadow-[0_0_10px_rgba(255,255,255,0.3)]" : "text-muted-foreground"
+                            isActive ? "text-foreground drop-shadow-[0_0_10px_oklch(1_0_0/0.22)]" : "text-muted-foreground"
                           }`}
                           style={{ fontFamily: "var(--font-display)" }}
                         >
@@ -212,10 +218,10 @@ export function WebsiteShowcase({ projects }: WebsiteShowcaseProps) {
                   initial={{ opacity: 0, filter: "blur(10px)", scale: 0.95, rotateX: 5 }}
                   animate={{ opacity: 1, filter: "blur(0px)", scale: 1, rotateX: 0 }}
                   exit={{ opacity: 0, filter: "blur(10px)", scale: 1.05 }}
-                  transition={{ duration: 0.6, ease: [0.25, 1, 0.5, 1] }}
-                  className="absolute inset-0 w-full h-full flex flex-col rounded-2xl overflow-hidden border border-white/10 bg-[oklch(0.08_0.015_250)]"
+                  transition={{ duration: 0.75, ease: [0.7, 0, 0.2, 1] }}
+                  className="absolute inset-0 w-full h-full flex flex-col rounded-xl overflow-hidden border border-white/10 bg-card"
                   style={{
-                    boxShadow: `0 40px 100px oklch(0 0 0 / 0.8), 0 0 0 1px oklch(1 1 1 / 0.05) inset`,
+                    boxShadow: `var(--shadow-elevated), 0 0 0 1px oklch(1 0 0 / 0.05) inset`,
                     rotateX,
                     rotateY,
                     transformStyle: "preserve-3d"
@@ -224,11 +230,11 @@ export function WebsiteShowcase({ projects }: WebsiteShowcaseProps) {
                   onMouseLeave={handleMouseLeave}
                 >
                   {/* Browser chrome */}
-                  <div className="flex items-center gap-2 px-4 py-3 bg-[oklch(0.12_0.015_250)] border-b border-white/5 relative z-20">
+                  <div className="flex items-center gap-2 px-4 py-3 bg-secondary/70 border-b border-white/5 relative z-20">
                     <div className="flex gap-1.5">
-                      <div className="w-2.5 h-2.5 rounded-full bg-[#ff5f57]" />
-                      <div className="w-2.5 h-2.5 rounded-full bg-[#febc2e]" />
-                      <div className="w-2.5 h-2.5 rounded-full bg-[#28c840]" />
+                      <div className="w-2.5 h-2.5 rounded-full bg-primary/70" />
+                      <div className="w-2.5 h-2.5 rounded-full bg-muted-foreground/35" />
+                      <div className="w-2.5 h-2.5 rounded-full bg-foreground/35" />
                     </div>
                     <div className="flex-1 mx-4">
                       <div className="flex items-center gap-2 px-3 py-1.5 rounded-md bg-white/5 border border-white/5 shadow-inner">
@@ -244,7 +250,7 @@ export function WebsiteShowcase({ projects }: WebsiteShowcaseProps) {
                   </div>
 
                   {/* Screenshot with parallax */}
-                  <div className="relative flex-1 overflow-hidden bg-black/50 min-h-0">
+                  <div className="relative flex-1 overflow-hidden bg-background/80 min-h-0">
                     <motion.img
                       src={active.image}
                       alt={active.title}
@@ -261,7 +267,7 @@ export function WebsiteShowcase({ projects }: WebsiteShowcaseProps) {
                   </div>
 
                   {/* Card footer (Content slides up slightly) */}
-                  <div className="p-6 bg-[oklch(0.08_0.015_250)] relative z-20">
+                  <div className="p-6 bg-card relative z-20">
                     <div className="flex items-start justify-between gap-4 mb-4">
                       <div>
                         <motion.h3
@@ -288,7 +294,7 @@ export function WebsiteShowcase({ projects }: WebsiteShowcaseProps) {
                           href={active.url}
                           target="_blank"
                           rel="noreferrer"
-                          className="flex-shrink-0 flex items-center gap-1.5 px-5 py-2.5 rounded-full text-[10px] font-mono uppercase tracking-[0.2em] border border-white/10 hover:border-primary/50 hover:bg-primary/10 text-foreground transition-all duration-500 group relative overflow-hidden"
+                          className="premium-button flex-shrink-0 text-[10px] font-mono uppercase tracking-[0.2em] text-foreground"
                           style={{ fontFamily: "var(--font-mono)" }}
                           data-cursor="view"
                         >
