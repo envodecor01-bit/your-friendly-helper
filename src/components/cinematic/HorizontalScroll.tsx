@@ -42,7 +42,7 @@ export function HorizontalScroll({ projects }: HorizontalScrollProps) {
         start: "top top",
         end: () => `+=${getScrollAmount()}`,
         pin: true,
-        scrub: 1,
+        scrub: 1.25,
         invalidateOnRefresh: true,
       },
     });
@@ -67,7 +67,7 @@ export function HorizontalScroll({ projects }: HorizontalScrollProps) {
       </div>
 
       {/* Scrollable track */}
-      <div ref={trackRef} className="flex items-center gap-6 pl-6 md:pl-16 lg:pl-24 pr-24 h-screen">
+      <div ref={trackRef} className="flex items-center gap-6 pl-[var(--section-px)] pr-24 h-screen">
         {projects.map((project, i) => (
           <HorizontalCard key={project.n} project={project} index={i} />
         ))}
@@ -83,9 +83,9 @@ function HorizontalCard({ project, index }: { project: Project; index: number })
   const mouseX = useSpring(x, { stiffness: 150, damping: 20 });
   const mouseY = useSpring(y, { stiffness: 150, damping: 20 });
 
-  const rotateX = useTransform(mouseY, [-0.5, 0.5], ["5deg", "-5deg"]);
-  const rotateY = useTransform(mouseX, [-0.5, 0.5], ["-5deg", "5deg"]);
-  const glowOpacity = useTransform(mouseX, [-0.5, 0, 0.5], [0.1, 0.5, 0.1]);
+  const rotateX = useTransform(mouseY, [-0.5, 0.5], ["2.5deg", "-2.5deg"]);
+  const rotateY = useTransform(mouseX, [-0.5, 0.5], ["-2.5deg", "2.5deg"]);
+  const glowOpacity = useTransform(mouseX, [-0.5, 0, 0.5], [0.06, 0.24, 0.06]);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!cardRef.current) return;
@@ -113,14 +113,14 @@ function HorizontalCard({ project, index }: { project: Project; index: number })
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "100px" }}
-      transition={{ duration: 0.8, ease: [0.7, 0, 0.2, 1] }}
+      transition={{ duration: 0.9, ease: [0.7, 0, 0.2, 1] }}
       style={{
         rotateX,
         rotateY,
         transformPerspective: 1200,
-        boxShadow: `0 40px 100px oklch(0 0 0 / 0.5), 0 0 0 1px oklch(1 0 0 / 0.06)`,
+        boxShadow: `var(--shadow-elevated), 0 0 0 1px oklch(1 0 0 / 0.06)`,
       }}
-      className="relative flex-shrink-0 w-[80vw] max-w-2xl h-[70vh] rounded-2xl overflow-hidden group cursor-pointer"
+      className="relative flex-shrink-0 w-[80vw] max-w-2xl h-[70vh] rounded-xl overflow-hidden group cursor-pointer"
     >
       {/* Dynamic Glow */}
       <motion.div
