@@ -123,7 +123,7 @@ export function WebsiteShowcase({ projects }: WebsiteShowcaseProps) {
                   <button
                     key={p.n}
                     onClick={() => scrollToProject(i)}
-                    className={`group relative text-left flex items-start gap-5 py-6 border-b transition-all duration-500 cursor-pointer ${
+                    className={`group relative text-left flex items-start gap-5 py-6 border-b transition-all duration-500 ease-[var(--ease-cinematic)] cursor-pointer ${
                       isActive
                         ? "border-primary/40 opacity-100"
                         : "border-white/8 hover:border-white/16 opacity-40 hover:opacity-70 grayscale-[50%]"
@@ -212,10 +212,10 @@ export function WebsiteShowcase({ projects }: WebsiteShowcaseProps) {
                   initial={{ opacity: 0, filter: "blur(10px)", scale: 0.95, rotateX: 5 }}
                   animate={{ opacity: 1, filter: "blur(0px)", scale: 1, rotateX: 0 }}
                   exit={{ opacity: 0, filter: "blur(10px)", scale: 1.05 }}
-                  transition={{ duration: 0.6, ease: [0.25, 1, 0.5, 1] }}
-                  className="absolute inset-0 w-full h-full flex flex-col rounded-2xl overflow-hidden border border-white/10 bg-[oklch(0.08_0.015_250)]"
+                  transition={{ duration: 0.75, ease: [0.7, 0, 0.2, 1] }}
+                  className="absolute inset-0 w-full h-full flex flex-col rounded-xl overflow-hidden border border-white/10 bg-card"
                   style={{
-                    boxShadow: `0 40px 100px oklch(0 0 0 / 0.8), 0 0 0 1px oklch(1 1 1 / 0.05) inset`,
+                    boxShadow: `var(--shadow-elevated), 0 0 0 1px oklch(1 0 0 / 0.05) inset`,
                     rotateX,
                     rotateY,
                     transformStyle: "preserve-3d"
@@ -224,7 +224,7 @@ export function WebsiteShowcase({ projects }: WebsiteShowcaseProps) {
                   onMouseLeave={handleMouseLeave}
                 >
                   {/* Browser chrome */}
-                  <div className="flex items-center gap-2 px-4 py-3 bg-[oklch(0.12_0.015_250)] border-b border-white/5 relative z-20">
+                  <div className="flex items-center gap-2 px-4 py-3 bg-secondary/70 border-b border-white/5 relative z-20">
                     <div className="flex gap-1.5">
                       <div className="w-2.5 h-2.5 rounded-full bg-[#ff5f57]" />
                       <div className="w-2.5 h-2.5 rounded-full bg-[#febc2e]" />
@@ -244,7 +244,7 @@ export function WebsiteShowcase({ projects }: WebsiteShowcaseProps) {
                   </div>
 
                   {/* Screenshot with parallax */}
-                  <div className="relative flex-1 overflow-hidden bg-black/50 min-h-0">
+                  <div className="relative flex-1 overflow-hidden bg-background/80 min-h-0">
                     <motion.img
                       src={active.image}
                       alt={active.title}
@@ -261,7 +261,7 @@ export function WebsiteShowcase({ projects }: WebsiteShowcaseProps) {
                   </div>
 
                   {/* Card footer (Content slides up slightly) */}
-                  <div className="p-6 bg-[oklch(0.08_0.015_250)] relative z-20">
+                  <div className="p-6 bg-card relative z-20">
                     <div className="flex items-start justify-between gap-4 mb-4">
                       <div>
                         <motion.h3
@@ -288,7 +288,7 @@ export function WebsiteShowcase({ projects }: WebsiteShowcaseProps) {
                           href={active.url}
                           target="_blank"
                           rel="noreferrer"
-                          className="flex-shrink-0 flex items-center gap-1.5 px-5 py-2.5 rounded-full text-[10px] font-mono uppercase tracking-[0.2em] border border-white/10 hover:border-primary/50 hover:bg-primary/10 text-foreground transition-all duration-500 group relative overflow-hidden"
+                          className="premium-button flex-shrink-0 text-[10px] font-mono uppercase tracking-[0.2em] text-foreground"
                           style={{ fontFamily: "var(--font-mono)" }}
                           data-cursor="view"
                         >
