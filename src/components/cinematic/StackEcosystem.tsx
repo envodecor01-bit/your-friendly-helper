@@ -184,7 +184,7 @@ export function StackEcosystem() {
   }, { scope: containerRef });
 
   return (
-    <div ref={containerRef} className="relative w-full h-[800vh] bg-[#020005]">
+    <div ref={containerRef} className="relative w-full h-[720vh] bg-background">
       {/* Sticky container */}
       <div ref={wrapperRef} className="ecosystem-wrapper sticky top-0 w-full h-screen overflow-hidden flex items-center justify-center perspective-[1000px]">
         
@@ -195,7 +195,7 @@ export function StackEcosystem() {
 
         {/* Start State: Title */}
         <div className="ecosystem-title absolute z-10 flex flex-col items-center pointer-events-none">
-          <div className="font-mono text-sm md:text-base uppercase tracking-[0.4em] text-white/80 mb-4" style={{ fontFamily: "var(--font-mono)" }}>
+            <div className="font-mono text-sm md:text-base uppercase tracking-[0.32em] text-foreground/80 mb-4" style={{ fontFamily: "var(--font-mono)" }}>
             Tools I trust in production
           </div>
           <div className="w-12 h-px bg-primary/50" />
@@ -218,10 +218,10 @@ export function StackEcosystem() {
                   y1="0"
                   x2={circlePositions[i].x}
                   y2={circlePositions[i].y}
-                  stroke={hoveredId === tool.id ? "#7014f5" : "#7014f5"}
+                  stroke="oklch(0.70 0.14 245)"
                   strokeWidth={hoveredId === tool.id ? 2 : 1}
                   opacity={hoveredId === tool.id ? 0.6 : 0}
-                  style={{ filter: hoveredId === tool.id ? "drop-shadow(0 0 8px #7014f5)" : "none" }}
+                  style={{ filter: hoveredId === tool.id ? "drop-shadow(0 0 8px oklch(0.70 0.14 245 / 0.65))" : "none" }}
                 />
               ))}
             </g>
@@ -265,7 +265,7 @@ export function StackEcosystem() {
 
         {/* Center Focus Text (Outside ringRef so it doesn't rotate) */}
         <div className="center-focus-text absolute z-30 flex flex-col items-center pointer-events-none opacity-0">
-          <div className="font-display text-xl md:text-3xl tracking-tight text-white/90" style={{ fontFamily: "var(--font-display)" }}>
+          <div className="font-display text-xl md:text-3xl tracking-normal text-foreground/90" style={{ fontFamily: "var(--font-display)" }}>
             This is the stack behind the systems I build.
           </div>
         </div>
