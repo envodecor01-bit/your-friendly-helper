@@ -367,7 +367,7 @@ export function AboutSection() {
               {/* Floating glow behind card */}
               <div
                 aria-hidden
-                className="absolute -inset-4 -z-10 rounded-2xl opacity-22 pointer-events-none"
+                className="absolute -inset-4 -z-10 rounded-2xl opacity-[0.22] pointer-events-none"
                 style={{
                   background: "radial-gradient(ellipse at center, oklch(0.72 0.13 240 / 0.3), transparent 70%)",
                   filter: "blur(24px)",
