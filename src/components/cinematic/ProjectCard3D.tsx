@@ -59,10 +59,10 @@ export function ProjectCard3D({ project, index }: { project: Project; index: num
   const ref = useRef<HTMLDivElement>(null);
   const mx = useMotionValue(0);
   const my = useMotionValue(0);
-  const rx = useSpring(useTransform(my, [-0.5, 0.5], [8, -8]), { stiffness: 180, damping: 20 });
-  const ry = useSpring(useTransform(mx, [-0.5, 0.5], [-8, 8]), { stiffness: 180, damping: 20 });
-  const tx = useSpring(useTransform(mx, [-0.5, 0.5], [-12, 12]), { stiffness: 200, damping: 25 });
-  const ty = useSpring(useTransform(my, [-0.5, 0.5], [-12, 12]), { stiffness: 200, damping: 25 });
+  const rx = useSpring(useTransform(my, [-0.5, 0.5], [3, -3]), { stiffness: 180, damping: 28 });
+  const ry = useSpring(useTransform(mx, [-0.5, 0.5], [-3, 3]), { stiffness: 180, damping: 28 });
+  const tx = useSpring(useTransform(mx, [-0.5, 0.5], [-7, 7]), { stiffness: 200, damping: 30 });
+  const ty = useSpring(useTransform(my, [-0.5, 0.5], [-7, 7]), { stiffness: 200, damping: 30 });
 
   const handleMove = (e: React.MouseEvent) => {
     const el = ref.current;
@@ -93,7 +93,7 @@ export function ProjectCard3D({ project, index }: { project: Project; index: num
         className="md:col-span-7 relative"
         data-cursor="view"
       >
-        <div className="relative aspect-[16/11] overflow-hidden rounded-2xl border border-white/10 bg-card/30">
+        <div className="relative aspect-[16/11] overflow-hidden rounded-xl border border-white/10 bg-card/30">
           <motion.img
             src={project.image}
             alt={`${project.title} — ${project.tag}`}
@@ -155,7 +155,7 @@ export function ProjectCard3D({ project, index }: { project: Project; index: num
         <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-primary mb-4">
           {project.n} — {project.client}
         </div>
-        <h3 className="font-display text-4xl md:text-5xl font-light tracking-[-0.02em] mb-5 group-hover:text-gradient transition-all duration-700">
+        <h3 className="font-display text-4xl md:text-5xl font-light tracking-normal mb-5 group-hover:text-gradient transition-all duration-700">
           {project.title}
         </h3>
         <p className="text-muted-foreground leading-relaxed text-base md:text-[17px] mb-8 max-w-md">
