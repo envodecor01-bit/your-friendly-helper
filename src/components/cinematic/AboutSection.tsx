@@ -156,13 +156,9 @@ export function AboutSection() {
   }, { scope: timelineRef });
 
   return (
-    <section
-      id="about"
-      ref={containerRef}
-      className="relative overflow-hidden"
-    >
+    <section id="about" ref={containerRef} className="relative overflow-hidden">
       {/* ── Part 1: Full-bleed identity statement ── */}
-      <div className="relative px-6 md:px-16 lg:px-24 py-28 md:py-40 border-b border-white/6">
+      <div className="section-shell relative border-b border-white/6">
         {/* Smooth top fade from hero */}
         <div
           aria-hidden
@@ -183,7 +179,7 @@ export function AboutSection() {
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
+            transition={{ duration: 0.9, ease: [0.7, 0, 0.2, 1] }}
             className="chapter-num mb-10"
           >
             <span className="text-primary mr-3">01</span> About
@@ -198,7 +194,7 @@ export function AboutSection() {
                 whileInView={{ y: 0 }}
                 viewport={{ once: true, margin: "-10%" }}
                 transition={{ duration: 1.1, ease: [0.7, 0, 0.2, 1] }}
-                className="font-display font-bold text-[clamp(2.8rem,8vw,8rem)] leading-[0.92] tracking-[-0.03em] text-foreground"
+                className="font-display font-semibold text-[clamp(2.8rem,8vw,8rem)] leading-[0.92] tracking-normal text-foreground"
                 style={{ fontFamily: "var(--font-display)" }}
               >
                 Aryan Garg
@@ -211,7 +207,7 @@ export function AboutSection() {
                 whileInView={{ y: 0, opacity: 1 }}
                 viewport={{ once: true, margin: "-10%" }}
                 transition={{ duration: 1, delay: 0.15, ease: [0.7, 0, 0.2, 1] }}
-                className="font-display text-[clamp(1.4rem,3.5vw,3.5rem)] font-light leading-tight tracking-[-0.01em] text-primary/80"
+                className="font-display text-[clamp(1.4rem,3.5vw,3.5rem)] font-light leading-tight tracking-normal text-primary/80"
                 style={{ fontFamily: "var(--font-display)" }}
               >
                 AI Engineer · Full-Stack Dev
