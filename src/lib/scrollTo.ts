@@ -15,7 +15,7 @@ export function scrollToId(id: string) {
   const el = document.getElementById(id);
   if (!el) return;
   if (_lenis) {
-    _lenis.scrollTo(el, { offset: -40, duration: 1.6 });
+    _lenis.scrollTo(el, { offset: -32, duration: 1.25, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
   } else {
     el.scrollIntoView({ behavior: "smooth", block: "start" });
   }
