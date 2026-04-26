@@ -389,13 +389,13 @@ function WorkScene() {
 
 function ServicesScene() {
   return (
-    <section id="services" className="relative px-6 md:px-16 lg:px-24 py-32">
+    <section id="services" className="section-shell relative overflow-hidden">
       <div className="relative z-10 max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.9, ease: [0.7, 0, 0.2, 1] }}
           className="chapter-num mb-6"
         >
           <span className="text-primary mr-3">04</span> Services
@@ -404,7 +404,7 @@ function ServicesScene() {
         <SplitReveal
           as="h2"
           by="word"
-          className="font-display font-light tracking-[-0.03em] text-[clamp(2rem,5vw,4.5rem)] leading-[1] mb-16 max-w-3xl"
+          className="font-display font-light tracking-normal text-[clamp(2rem,5vw,4.5rem)] leading-[1] mb-16 max-w-3xl"
         >
           What I do, end to end.
         </SplitReveal>
