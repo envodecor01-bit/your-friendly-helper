@@ -15,7 +15,7 @@ export function Nav({ active }: { active?: string }) {
     <motion.header
       initial={{ y: -20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 1, delay: 0.4, ease: [0.7, 0, 0.2, 1] }}
+      transition={{ duration: 0.9, delay: 0.35, ease: [0.7, 0, 0.2, 1] }}
       className="fixed top-0 inset-x-0 z-50 flex items-center justify-between px-6 md:px-12 py-5"
       style={{
         background: "linear-gradient(180deg, oklch(0.06 0.012 250 / 0.8) 0%, transparent 100%)",
@@ -23,10 +23,10 @@ export function Nav({ active }: { active?: string }) {
       }}
     >
       {/* Logo */}
-      <Magnetic strength={0.3}>
+      <Magnetic strength={0.18}>
         <button
           onClick={() => scrollToId("top")}
-          className="flex items-center gap-2 cursor-pointer group"
+          className="flex items-center gap-2 cursor-pointer group premium-button min-h-0 px-3 py-2 border-transparent bg-transparent"
         >
           {/* Dot mark */}
           <div className="relative w-4 h-4">
@@ -50,10 +50,10 @@ export function Nav({ active }: { active?: string }) {
         {LINKS.map((l) => {
           const isActive = active === l.id;
           return (
-            <Magnetic key={l.id} strength={0.25}>
+            <Magnetic key={l.id} strength={0.16}>
               <button
                 onClick={() => scrollToId(l.id)}
-                className={`relative px-3 py-2 transition-colors duration-300 cursor-pointer rounded-full ${
+                className={`relative px-3.5 py-2 transition-colors duration-500 ease-[var(--ease-cinematic)] cursor-pointer rounded-full ${
                   isActive ? "text-foreground" : "hover:text-foreground"
                 }`}
               >
@@ -72,18 +72,13 @@ export function Nav({ active }: { active?: string }) {
       </nav>
 
       {/* CTA */}
-      <Magnetic strength={0.4}>
+      <Magnetic strength={0.2}>
         <button
           onClick={() => scrollToId("contact")}
-          className="relative text-[10px] uppercase tracking-[0.25em] font-mono px-5 py-2.5 rounded-full border border-white/15 hover:border-primary/50 hover:bg-primary/8 transition-all duration-500 cursor-pointer overflow-hidden group"
+          className="premium-button text-[10px] uppercase tracking-[0.25em] font-mono cursor-pointer"
           style={{ fontFamily: "var(--font-mono)" }}
         >
-          <span
-            aria-hidden
-            className="absolute inset-0 translate-x-[-110%] group-hover:translate-x-[110%] transition-transform duration-600"
-            style={{ background: "linear-gradient(90deg,transparent,oklch(0.72 0.13 240/0.12),transparent)" }}
-          />
-          Let's talk
+          <span>Let's talk</span>
         </button>
       </Magnetic>
     </motion.header>
