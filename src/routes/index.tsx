@@ -204,7 +204,7 @@ function IntroScene() {
   return (
     <section
       id="intro"
-      className="relative min-h-screen flex flex-col justify-between px-6 md:px-16 lg:px-24 pt-28 pb-16"
+      className="relative min-h-[100svh] flex flex-col justify-between px-[var(--section-px)] pt-28 pb-16"
     >
       {/* Availability badge */}
       <motion.div
@@ -245,7 +245,7 @@ function IntroScene() {
               <motion.h1
                 animate={{ y: [0, -8, 0] }}
                 transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-                className="font-display font-light tracking-[-0.04em] text-[clamp(3.5rem,11vw,11rem)] leading-[0.9] pointer-events-auto"
+                className="font-display font-light tracking-normal text-[clamp(3.5rem,11vw,11rem)] leading-[0.9] pointer-events-auto"
                 style={{ fontFamily: "var(--font-display)" }}
               >
                 Aryan
@@ -284,7 +284,7 @@ function IntroScene() {
           <Magnetic strength={0.4}>
             <button
               onClick={() => scrollToId("about")}
-              className="group flex items-center gap-3 font-mono text-xs uppercase tracking-[0.3em] text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
+              className="premium-button group font-mono text-xs uppercase tracking-[0.24em] text-muted-foreground hover:text-foreground cursor-pointer"
               data-cursor="scroll"
               style={{ fontFamily: "var(--font-mono)" }}
             >
@@ -301,7 +301,7 @@ function IntroScene() {
           <Magnetic strength={0.4}>
             <a
               href="mailto:hello@aryangarg.dev"
-              className="relative hidden md:flex items-center gap-2 px-6 py-3 rounded-full border border-white/15 text-xs font-mono uppercase tracking-[0.2em] text-muted-foreground hover:text-foreground transition-all duration-500 overflow-hidden group"
+              className="premium-button hidden md:flex text-xs font-mono uppercase tracking-[0.2em] text-muted-foreground hover:text-foreground group"
               data-cursor="email"
               style={{ fontFamily: "var(--font-mono)" }}
             >
