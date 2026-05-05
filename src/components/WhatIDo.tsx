@@ -197,56 +197,6 @@ export function WhatIDo() {
     </section>
   );
 }
-  item,
-  index,
-  onOpen,
-}: {
-  item: (typeof ITEMS)[number];
-  index: number;
-  onOpen: () => void;
-}) {
-  const Icon = item.icon;
-  const positions = [
-    { x: 60, y: 80, r: -6 },
-    { x: 360, y: 140, r: 4 },
-    { x: 680, y: 60, r: -3 },
-  ];
-  const p = positions[index % positions.length];
-
-  return (
-    <motion.div
-      drag
-      dragMomentum
-      dragElastic={0.4}
-      whileDrag={{ scale: 1.05, zIndex: 50 }}
-      whileHover={{ scale: 1.02 }}
-      initial={{ opacity: 0, y: 30, x: p.x, rotate: p.r }}
-      animate={{
-        opacity: 1,
-        y: [p.y, p.y - 12, p.y],
-        rotate: [p.r, p.r + 2, p.r],
-      }}
-      transition={{
-        opacity: { duration: 0.5, delay: index * 0.1 },
-        y: { duration: 4 + index * 0.4, repeat: Infinity, ease: "easeInOut" },
-        rotate: { duration: 6 + index * 0.5, repeat: Infinity, ease: "easeInOut" },
-      }}
-      onClick={onOpen}
-      data-hover
-      className="absolute h-56 w-64 cursor-grab overflow-hidden rounded-2xl border border-foreground/15 bg-card/60 p-5 backdrop-blur-xl active:cursor-grabbing"
-      style={{ touchAction: "none" }}
-    >
-      <div className={`absolute -inset-px rounded-2xl bg-gradient-to-br ${item.accent} opacity-50 blur-[2px]`} />
-      <div className="relative">
-        <div className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-primary/30 bg-primary/10 text-primary">
-          <Icon className="h-4 w-4" />
-        </div>
-        <h3 className="font-display mt-4 text-xl font-light text-foreground">{item.title}</h3>
-        <p className="mt-2 text-xs leading-relaxed text-foreground/65">{item.desc}</p>
-      </div>
-    </motion.div>
-  );
-}
 
 
 /* ---------- LIVE CARD with magnetic tilt + mini experience ---------- */
