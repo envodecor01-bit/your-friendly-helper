@@ -297,10 +297,8 @@ export function PortfolioPage() {
           <DinoGame />
         </SectionFlow>
 
-        {/* JOURNEY */}
-        <SectionFlow>
-          <Journey />
-        </SectionFlow>
+        {/* JOURNEY — pinned (GSAP) */}
+        <Journey />
 
         {/* CONTACT */}
         <SectionFlow intensity={0.7}>
