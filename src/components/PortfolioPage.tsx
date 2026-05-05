@@ -15,6 +15,7 @@ import { SplitReveal, FadeUp } from "@/components/SplitReveal";
 import { TypingText } from "@/components/TypingText";
 import { MagneticButton } from "@/components/MagneticButton";
 import { Toaster } from "@/components/ui/sonner";
+import { SectionFlow } from "@/components/SectionFlow";
 
 const SECTIONS = [
   { id: "hero", label: "Intro" },
