@@ -203,20 +203,23 @@ export function WhatIDo() {
 function LiveCard({
   item,
   onOpen,
+  active = true,
 }: {
   item: (typeof ITEMS)[number];
   onOpen: () => void;
+  active?: boolean;
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const [hover, setHover] = useState(false);
   const mx = useMotionValue(0);
   const my = useMotionValue(0);
-  const rx = useSpring(useTransform(my, [-0.5, 0.5], [10, -10]), { stiffness: 200, damping: 18 });
-  const ry = useSpring(useTransform(mx, [-0.5, 0.5], [-14, 14]), { stiffness: 200, damping: 18 });
+  const rx = useSpring(useTransform(my, [-0.5, 0.5], [8, -8]), { stiffness: 200, damping: 18 });
+  const ry = useSpring(useTransform(mx, [-0.5, 0.5], [-10, 10]), { stiffness: 200, damping: 18 });
   const glowX = useTransform(mx, [-0.5, 0.5], ["0%", "100%"]);
   const glowY = useTransform(my, [-0.5, 0.5], ["0%", "100%"]);
 
   const onMove = (e: ReactMouseEvent<HTMLDivElement>) => {
+    if (!active) return;
     const el = ref.current;
     if (!el) return;
     const r = el.getBoundingClientRect();
@@ -235,18 +238,18 @@ function LiveCard({
     <motion.div
       ref={ref}
       onMouseMove={onMove}
-      onMouseEnter={() => setHover(true)}
+      onMouseEnter={() => active && setHover(true)}
       onMouseLeave={onLeave}
-      onClick={onOpen}
-      data-hover
+      onClick={() => active && onOpen()}
+      data-hover={active ? "" : undefined}
       style={{ rotateX: rx, rotateY: ry, transformPerspective: 1200 }}
-      className="group relative h-[420px] cursor-pointer"
+      className={`group relative h-[420px] ${active ? "cursor-pointer" : "pointer-events-none"}`}
       animate={{ y: hover ? -6 : 0 }}
       transition={{ type: "spring", stiffness: 200, damping: 22 }}
     >
       {/* Animated gradient border */}
       <div
-        className={`absolute -inset-px rounded-2xl bg-gradient-to-br ${item.accent} opacity-60 blur-[2px] transition-opacity duration-500 group-hover:opacity-100`}
+        className={`absolute -inset-px rounded-2xl bg-gradient-to-br ${item.accent} opacity-30 blur-[2px] transition-opacity duration-500 ${active ? "opacity-70" : ""}`}
       />
       <div className="relative flex h-full flex-col overflow-hidden rounded-2xl border border-foreground/10 bg-card/40 p-7 backdrop-blur-xl">
         {/* Cursor-following spotlight */}
