@@ -15,6 +15,7 @@ import { SplitReveal, FadeUp } from "@/components/SplitReveal";
 import { TypingText } from "@/components/TypingText";
 import { MagneticButton } from "@/components/MagneticButton";
 import { Toaster } from "@/components/ui/sonner";
+import { SectionFlow } from "@/components/SectionFlow";
 
 const SECTIONS = [
   { id: "hero", label: "Intro" },
@@ -229,68 +230,82 @@ export function PortfolioPage() {
         </section>
 
         {/* ABOUT ME — immersive scroll-driven */}
-        <ImmersiveAbout />
+        <SectionFlow>
+          <ImmersiveAbout />
+        </SectionFlow>
 
-        {/* WHAT I DO */}
+        {/* WHAT I DO — pinned (GSAP), no transform wrapper */}
         <WhatIDo />
 
         {/* PROJECTS */}
-        <SelectedWork />
+        <SectionFlow>
+          <SelectedWork />
+        </SectionFlow>
 
         {/* SKILLS */}
-        <section id="skills" className="px-6 py-32 md:px-12 md:py-40">
-          <div className="mx-auto max-w-6xl">
-            <FadeUp className="mb-16 max-w-2xl">
-              <div className="font-mono-tech text-[10px] uppercase tracking-[0.4em] text-accent">
-                04 / My Stack
-              </div>
-              <h2 className="font-display mt-4 text-4xl font-light leading-tight md:text-6xl">
-                Tools I <span className="gradient-text">use.</span>
-              </h2>
-              <p className="mt-6 max-w-md text-sm leading-relaxed text-foreground/60">
-                A focused toolkit I keep sharpening — from AI pipelines to shader-heavy interfaces.
-              </p>
-            </FadeUp>
+        <SectionFlow>
+          <section id="skills" className="px-6 py-32 md:px-12 md:py-40">
+            <div className="mx-auto max-w-6xl">
+              <FadeUp className="mb-16 max-w-2xl">
+                <div className="font-mono-tech text-[10px] uppercase tracking-[0.4em] text-accent">
+                  04 / My Stack
+                </div>
+                <h2 className="font-display mt-4 text-4xl font-light leading-tight md:text-6xl">
+                  Tools I <span className="gradient-text">use.</span>
+                </h2>
+                <p className="mt-6 max-w-md text-sm leading-relaxed text-foreground/60">
+                  A focused toolkit I keep sharpening — from AI pipelines to shader-heavy interfaces.
+                </p>
+              </FadeUp>
 
-            <div className="grid gap-px overflow-hidden rounded-2xl border border-foreground/10 bg-foreground/10 md:grid-cols-2 lg:grid-cols-4">
-              {SKILLS.map((g, gi) => (
-                <FadeUp key={g.group} delay={gi * 0.07}>
-                  <div className="group relative h-full overflow-hidden bg-background/70 p-8 backdrop-blur-md transition-colors duration-500 hover:bg-background/40">
-                    <div className="absolute -right-12 -top-12 h-32 w-32 rounded-full bg-primary/10 opacity-0 blur-3xl transition-opacity duration-700 group-hover:opacity-100" />
-                    <div className="relative">
-                      <div className="font-mono-tech text-[10px] uppercase tracking-[0.3em] text-accent">
-                        {g.group}
+              <div className="grid gap-px overflow-hidden rounded-2xl border border-foreground/10 bg-foreground/10 md:grid-cols-2 lg:grid-cols-4">
+                {SKILLS.map((g, gi) => (
+                  <FadeUp key={g.group} delay={gi * 0.07}>
+                    <div className="group relative h-full overflow-hidden bg-background/70 p-8 backdrop-blur-md transition-colors duration-500 hover:bg-background/40">
+                      <div className="absolute -right-12 -top-12 h-32 w-32 rounded-full bg-primary/10 opacity-0 blur-3xl transition-opacity duration-700 group-hover:opacity-100" />
+                      <div className="relative">
+                        <div className="font-mono-tech text-[10px] uppercase tracking-[0.3em] text-accent">
+                          {g.group}
+                        </div>
+                        <ul className="mt-6 space-y-2.5">
+                          {g.items.map((item) => (
+                            <li
+                              key={item}
+                              data-hover
+                              className="group/item font-display text-base text-foreground/85 transition-all duration-300 hover:translate-x-1 hover:text-accent"
+                            >
+                              {item}
+                            </li>
+                          ))}
+                        </ul>
                       </div>
-                      <ul className="mt-6 space-y-2.5">
-                        {g.items.map((item) => (
-                          <li
-                            key={item}
-                            data-hover
-                            className="group/item font-display text-base text-foreground/85 transition-all duration-300 hover:translate-x-1 hover:text-accent"
-                          >
-                            {item}
-                          </li>
-                        ))}
-                      </ul>
                     </div>
-                  </div>
-                </FadeUp>
-              ))}
+                  </FadeUp>
+                ))}
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
+        </SectionFlow>
 
         {/* LAB */}
-        <Lab />
+        <SectionFlow>
+          <Lab />
+        </SectionFlow>
 
         {/* DINO GAME */}
-        <DinoGame />
+        <SectionFlow>
+          <DinoGame />
+        </SectionFlow>
 
         {/* JOURNEY */}
-        <Journey />
+        <SectionFlow>
+          <Journey />
+        </SectionFlow>
 
         {/* CONTACT */}
-        <ContactSection />
+        <SectionFlow intensity={0.7}>
+          <ContactSection />
+        </SectionFlow>
       </main>
     </div>
   );
