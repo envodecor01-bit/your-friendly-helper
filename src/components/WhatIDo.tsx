@@ -1,8 +1,14 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import type { MouseEvent as ReactMouseEvent } from "react";
 import { AnimatePresence, motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { Code2, Sparkles, Layers, X } from "lucide-react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { FadeUp } from "./SplitReveal";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 type CardId = "web" | "ai" | "ux";
 
@@ -49,106 +55,134 @@ const ITEMS: {
 
 export function WhatIDo() {
   const [expanded, setExpanded] = useState<CardId | null>(null);
-  const [explore, setExplore] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
-  const cursorX = useMotionValue(50);
-  const cursorY = useMotionValue(50);
-  const sx = useSpring(cursorX, { stiffness: 80, damping: 20 });
-  const sy = useSpring(cursorY, { stiffness: 80, damping: 20 });
-  const spotBg = useTransform(
-    [sx, sy],
-    ([x, y]) =>
-      `radial-gradient(700px circle at ${x}% ${y}%, oklch(0.8 0.18 340 / 0.14), transparent 60%)`,
-  );
+  const pinRef = useRef<HTMLDivElement>(null);
+  const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
+  const headingRef = useRef<HTMLDivElement>(null);
+  const hintRef = useRef<HTMLDivElement>(null);
+  const progressRef = useRef<HTMLDivElement>(null);
+  const [activeIdx, setActiveIdx] = useState(0);
+
+  useLayoutEffect(() => {
+    if (typeof window === "undefined") return;
+    if (window.matchMedia("(max-width: 767px)").matches) return;
+
+    const ctx = gsap.context(() => {
+      const cards = cardsRef.current.filter(Boolean) as HTMLDivElement[];
+      if (!cards.length || !pinRef.current || !sectionRef.current) return;
+
+      // Initial state
+      gsap.set(cards, { opacity: 0.35, scale: 0.92, filter: "blur(6px)", xPercent: 0 });
+      gsap.set(cards[0], { opacity: 1, scale: 1.05, filter: "blur(0px)" });
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top top",
+          end: "+=200%",
+          pin: pinRef.current,
+          scrub: 1,
+          anticipatePin: 1,
+          onUpdate: (self) => {
+            const idx = Math.min(2, Math.floor(self.progress * 2.999));
+            setActiveIdx(idx);
+            if (progressRef.current) {
+              progressRef.current.style.transform = `scaleX(${self.progress})`;
+            }
+          },
+        },
+      });
+
+      // Step 1 -> Step 2: activate card 2
+      tl.to(cards[0], { opacity: 0.4, scale: 0.94, filter: "blur(5px)", xPercent: -8, ease: "power2.inOut" }, 0)
+        .to(cards[1], { opacity: 1, scale: 1.05, filter: "blur(0px)", ease: "power2.inOut" }, 0)
+        // Step 2 -> Step 3: activate card 3
+        .to(cards[1], { opacity: 0.4, scale: 0.94, filter: "blur(5px)", xPercent: -8, ease: "power2.inOut" }, 1)
+        .to(cards[2], { opacity: 1, scale: 1.05, filter: "blur(0px)", ease: "power2.inOut" }, 1);
+
+      // Hint fades after start
+      if (hintRef.current) {
+        gsap.to(hintRef.current, {
+          opacity: 0,
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top top",
+            end: "+=40%",
+            scrub: true,
+          },
+        });
+      }
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
 
   return (
     <section
       id="what"
       ref={sectionRef}
-      onMouseMove={(e) => {
-        const r = sectionRef.current?.getBoundingClientRect();
-        if (!r) return;
-        cursorX.set(((e.clientX - r.left) / r.width) * 100);
-        cursorY.set(((e.clientY - r.top) / r.height) * 100);
-      }}
-      className="relative overflow-hidden px-6 py-32 md:px-12 md:py-40"
+      className="relative"
+      style={{ minHeight: "300vh" }}
     >
       {/* Section blends top + bottom */}
       <div className="pointer-events-none absolute inset-x-0 top-0 z-30 h-40 bg-gradient-to-b from-background via-background/70 to-transparent" />
       <div className="pointer-events-none absolute inset-x-0 bottom-0 z-30 h-40 bg-gradient-to-t from-background via-background/70 to-transparent" />
 
-      {/* Soft glow backdrop */}
-      <div className="pointer-events-none absolute inset-0 -z-10">
-        <div className="absolute left-1/2 top-1/3 h-[60vmin] w-[60vmin] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/10 blur-[120px]" />
-        <div className="absolute right-10 bottom-10 h-[40vmin] w-[40vmin] rounded-full bg-accent/10 blur-[100px]" />
-      </div>
-      {/* Cursor spotlight */}
-      <motion.div className="pointer-events-none absolute inset-0 mix-blend-screen" style={{ background: spotBg }} />
-
-      <div className="relative mx-auto max-w-6xl">
-        <FadeUp className="mb-12 max-w-2xl">
-          <div className="font-mono-tech text-[10px] uppercase tracking-[0.4em] text-accent">
-            02 / What I Do
-          </div>
-          <h2 className="font-display mt-4 text-4xl font-light leading-tight md:text-6xl">
-            I build at the edge of <span className="gradient-text text-glow">code & creativity.</span>
-          </h2>
-          <p className="mt-5 max-w-md text-sm leading-relaxed text-foreground/60 md:text-base">
-            Hover a module to wake it up · click to step inside.
-          </p>
-        </FadeUp>
-
-        {/* Explore Mode toggle */}
-        <div className="mb-8 flex items-center justify-between">
-          <div className="font-mono-tech text-[10px] uppercase tracking-[0.32em] text-foreground/50">
-            {explore ? "Drag the cards · physics on" : "Grid layout"}
-          </div>
-          <button
-            data-hover
-            onClick={() => setExplore((v) => !v)}
-            className={`group inline-flex items-center gap-2 rounded-full border px-4 py-2 font-mono-tech text-[10px] uppercase tracking-[0.28em] transition-all ${
-              explore
-                ? "border-accent bg-accent/15 text-accent shadow-[0_0_20px_oklch(0.8_0.1_10/0.4)]"
-                : "border-foreground/20 text-foreground/70 hover:border-accent hover:text-accent"
-            }`}
-          >
-            <span className={`h-1.5 w-1.5 rounded-full ${explore ? "bg-accent animate-pulse" : "bg-foreground/40"}`} />
-            Explore Mode
-          </button>
+      <div ref={pinRef} className="relative flex h-screen flex-col justify-center overflow-hidden px-6 md:px-12">
+        {/* Subtle backdrop */}
+        <div className="pointer-events-none absolute inset-0 -z-10">
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/40 to-background/60" />
+          <div className="absolute left-1/2 top-1/2 h-[60vmin] w-[60vmin] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/[0.06] blur-[140px]" />
         </div>
 
-        <AnimatePresence mode="wait">
-          {explore ? (
-            <motion.div
-              key="explore"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="relative h-[560px] overflow-hidden rounded-2xl border border-foreground/10 bg-card/30 backdrop-blur-md"
-            >
-              {ITEMS.map((it, i) => (
-                <DraggableCard key={it.id} item={it} index={i} onOpen={() => setExpanded(it.id)} />
-              ))}
-              <div className="pointer-events-none absolute bottom-3 left-1/2 -translate-x-1/2 font-mono-tech text-[10px] uppercase tracking-[0.32em] text-foreground/40">
-                ✦ Drag · throw · click to expand
+        <div ref={headingRef} className="relative mx-auto w-full max-w-6xl">
+          <FadeUp className="mb-10 max-w-2xl">
+            <div className="font-mono-tech text-[10px] uppercase tracking-[0.4em] text-accent">
+              02 / What I Do
+            </div>
+            <h2 className="font-display mt-4 text-4xl font-light leading-tight md:text-5xl lg:text-6xl">
+              I build at the edge of <span className="gradient-text">code & creativity.</span>
+            </h2>
+          </FadeUp>
+
+          {/* Cards row */}
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-3 md:gap-8">
+            {ITEMS.map((it, i) => (
+              <div
+                key={it.id}
+                ref={(el) => {
+                  cardsRef.current[i] = el;
+                }}
+                className="will-change-transform"
+              >
+                <LiveCard
+                  item={it}
+                  active={activeIdx === i}
+                  onOpen={() => setExpanded(it.id)}
+                />
               </div>
-            </motion.div>
-          ) : (
-            <motion.div
-              key="grid"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="grid grid-cols-1 gap-6 md:grid-cols-3"
-            >
-              {ITEMS.map((it, i) => (
-                <FadeUp key={it.id} delay={i * 0.1}>
-                  <LiveCard item={it} onOpen={() => setExpanded(it.id)} />
-                </FadeUp>
-              ))}
-            </motion.div>
-          )}
-        </AnimatePresence>
+            ))}
+          </div>
+
+          {/* Progress + hint */}
+          <div className="mt-10 flex items-center justify-between">
+            <div ref={hintRef} className="font-mono-tech text-[10px] uppercase tracking-[0.32em] text-foreground/40">
+              ↓ Scroll to explore
+            </div>
+            <div className="flex items-center gap-3">
+              <span className="font-mono-tech text-[10px] tracking-[0.3em] text-foreground/50">
+                0{activeIdx + 1} / 03
+              </span>
+              <div className="h-px w-32 overflow-hidden bg-foreground/10">
+                <div
+                  ref={progressRef}
+                  className="h-full origin-left bg-accent"
+                  style={{ transform: "scaleX(0)" }}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* Fullscreen expanded experience */}
@@ -164,77 +198,28 @@ export function WhatIDo() {
   );
 }
 
-function DraggableCard({
-  item,
-  index,
-  onOpen,
-}: {
-  item: (typeof ITEMS)[number];
-  index: number;
-  onOpen: () => void;
-}) {
-  const Icon = item.icon;
-  const positions = [
-    { x: 60, y: 80, r: -6 },
-    { x: 360, y: 140, r: 4 },
-    { x: 680, y: 60, r: -3 },
-  ];
-  const p = positions[index % positions.length];
-
-  return (
-    <motion.div
-      drag
-      dragMomentum
-      dragElastic={0.4}
-      whileDrag={{ scale: 1.05, zIndex: 50 }}
-      whileHover={{ scale: 1.02 }}
-      initial={{ opacity: 0, y: 30, x: p.x, rotate: p.r }}
-      animate={{
-        opacity: 1,
-        y: [p.y, p.y - 12, p.y],
-        rotate: [p.r, p.r + 2, p.r],
-      }}
-      transition={{
-        opacity: { duration: 0.5, delay: index * 0.1 },
-        y: { duration: 4 + index * 0.4, repeat: Infinity, ease: "easeInOut" },
-        rotate: { duration: 6 + index * 0.5, repeat: Infinity, ease: "easeInOut" },
-      }}
-      onClick={onOpen}
-      data-hover
-      className="absolute h-56 w-64 cursor-grab overflow-hidden rounded-2xl border border-foreground/15 bg-card/60 p-5 backdrop-blur-xl active:cursor-grabbing"
-      style={{ touchAction: "none" }}
-    >
-      <div className={`absolute -inset-px rounded-2xl bg-gradient-to-br ${item.accent} opacity-50 blur-[2px]`} />
-      <div className="relative">
-        <div className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-primary/30 bg-primary/10 text-primary">
-          <Icon className="h-4 w-4" />
-        </div>
-        <h3 className="font-display mt-4 text-xl font-light text-foreground">{item.title}</h3>
-        <p className="mt-2 text-xs leading-relaxed text-foreground/65">{item.desc}</p>
-      </div>
-    </motion.div>
-  );
-}
-
 
 /* ---------- LIVE CARD with magnetic tilt + mini experience ---------- */
 function LiveCard({
   item,
   onOpen,
+  active = true,
 }: {
   item: (typeof ITEMS)[number];
   onOpen: () => void;
+  active?: boolean;
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const [hover, setHover] = useState(false);
   const mx = useMotionValue(0);
   const my = useMotionValue(0);
-  const rx = useSpring(useTransform(my, [-0.5, 0.5], [10, -10]), { stiffness: 200, damping: 18 });
-  const ry = useSpring(useTransform(mx, [-0.5, 0.5], [-14, 14]), { stiffness: 200, damping: 18 });
+  const rx = useSpring(useTransform(my, [-0.5, 0.5], [8, -8]), { stiffness: 200, damping: 18 });
+  const ry = useSpring(useTransform(mx, [-0.5, 0.5], [-10, 10]), { stiffness: 200, damping: 18 });
   const glowX = useTransform(mx, [-0.5, 0.5], ["0%", "100%"]);
   const glowY = useTransform(my, [-0.5, 0.5], ["0%", "100%"]);
 
   const onMove = (e: ReactMouseEvent<HTMLDivElement>) => {
+    if (!active) return;
     const el = ref.current;
     if (!el) return;
     const r = el.getBoundingClientRect();
@@ -253,18 +238,18 @@ function LiveCard({
     <motion.div
       ref={ref}
       onMouseMove={onMove}
-      onMouseEnter={() => setHover(true)}
+      onMouseEnter={() => active && setHover(true)}
       onMouseLeave={onLeave}
-      onClick={onOpen}
-      data-hover
+      onClick={() => active && onOpen()}
+      data-hover={active ? "" : undefined}
       style={{ rotateX: rx, rotateY: ry, transformPerspective: 1200 }}
-      className="group relative h-[420px] cursor-pointer"
+      className={`group relative h-[420px] ${active ? "cursor-pointer" : "pointer-events-none"}`}
       animate={{ y: hover ? -6 : 0 }}
       transition={{ type: "spring", stiffness: 200, damping: 22 }}
     >
       {/* Animated gradient border */}
       <div
-        className={`absolute -inset-px rounded-2xl bg-gradient-to-br ${item.accent} opacity-60 blur-[2px] transition-opacity duration-500 group-hover:opacity-100`}
+        className={`absolute -inset-px rounded-2xl bg-gradient-to-br ${item.accent} opacity-30 blur-[2px] transition-opacity duration-500 ${active ? "opacity-70" : ""}`}
       />
       <div className="relative flex h-full flex-col overflow-hidden rounded-2xl border border-foreground/10 bg-card/40 p-7 backdrop-blur-xl">
         {/* Cursor-following spotlight */}
